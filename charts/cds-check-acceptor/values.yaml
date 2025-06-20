@@ -1,0 +1,11 @@
+image:
+  repository: "gitlab.akb-it.ru:4567/pautina/cds-check-acceptor"
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+replicaCount: 2
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
