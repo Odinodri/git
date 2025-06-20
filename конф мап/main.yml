@@ -1,0 +1,5 @@
+---
+#db cds-director-p
+db_name_k: cds_director
+db_username_k: srv_cds_check_acceptor_k
+db_passwrod_k: srv_cds_check_acceptor_k

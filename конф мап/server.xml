@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Server port="8005" shutdown="SHUTDOWN">
+  <Listener className="org.apache.catalina.startup.VersionLoggerListener" />
+  <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
+  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
+  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+  <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
+
+  <GlobalNamingResources>
+    <Resource name="UserDatabase" auth="Container"
+              type="org.apache.catalina.UserDatabase"
+              description="User database that can be updated and saved"
+              factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
+              pathname="conf/tomcat-users.xml" />
+  </GlobalNamingResources>
+  <Service name="Catalina">
+    <Connector acceptCount="150" connectionTimeout="60000" maxThreads="200" minSpareThreads="10" port="8080"/>
+<!--    <Connector acceptCount="150" connectionTimeout="60000" maxThreads="200" minSpareThreads="10" port="8080" redirectPort="8443" scheme="https"/>
+    <Connector protocol="org.apache.coyote.http11.Http11Nio2Protocol" port="8443"
+               acceptCount="2000"
+               maxThreads="4000"
+               minSpareThreads="100"
+               maxParameterCount="-1"
+               maxHttpHeaderSize="100000"
+               scheme="https" secure="true" SSLEnabled="true"
+               SSLEngine="on" sslImplementationName="org.apache.tomcat.util.net.jsse.JSSEImplementation"
+               enableLookups="false"
+               disableUploadTimeout="true"
+               clientAuth="false"
+               keystoreFile="conf/key/stdpr-tomcat.jks"
+               keystorePass="1q2w3e4rt56yu78i"
+               keystoreType="JKS" keyPass="1q2w3e4r" keyAlias="stdpr-tomcat" /> -->
+<!--        maxSpareThreads="200"-->
+    <Engine name="Catalina" defaultHost="localhost">
+      <Realm className="org.apache.catalina.realm.LockOutRealm">
+        <Realm className="org.apache.catalina.realm.UserDatabaseRealm"
+               resourceName="UserDatabase"/>
+      </Realm>
+      <Host name="localhost"  appBase="webapps" deployXML="true"
+            unpackWARs="true" autoDeploy="true">
+        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+               prefix="localhost_access_log" suffix=".txt"
+               pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+       <Valve className="org.apache.catalina.valves.RemoteIpValve" 
+              internalProxies="127\.0\.0\.1|\:\:1" 
+              remoteIpHeader="x-forwarded-for" 
+              proxiesHeader="x-forwarded-by" 
+              protocolHeader="x-forwarded-proto" 
+       />
+      </Host>
+    </Engine>
+  </Service>
+</Server>

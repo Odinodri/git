@@ -1,0 +1,53 @@
+<Configuration>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_ERR">
+            <PatternLayout pattern="%d %t %c %p:%n%m%n"/>
+        </Console>
+
+        <RollingFile
+                name="RollingFile"
+                fileName="${sys:catalina.base}/logs/${web:servletContextName}.generic.log"
+                filePattern="${sys:catalina.base}/logs/${web:servletContextName}.generic.log.%i.gz">
+            <PatternLayout pattern="%d %t %c %p:%n%m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1000MB"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile
+                name="WarnRollingFile"
+                fileName="${sys:catalina.base}/logs/${web:servletContextName}.generic.warn.log"
+                filePattern="${sys:catalina.base}/logs/${web:servletContextName}.generic.warn.log.%i.gz">
+            <ThresholdFilter level="WARN"/>
+            <PatternLayout pattern="%d %t %c %p:%n%m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1000MB"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile
+                name="PoisonedMsgRollingFile"
+                fileName="${sys:catalina.base}/logs/${web:servletContextName}.generic.poisoned-msg.log"
+                filePattern="${sys:catalina.base}/logs/${web:servletContextName}.generic.poisoned-msg.log.%i.gz">
+            <ThresholdFilter level="DEBUG"/>
+            <PatternLayout pattern="%d %t %c %p:%n%m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger
+                name="PoisonedMessages"
+                level="info"
+                additiviry="true">
+            <AppenderRef ref="PoisonedMsgRollingFile"/>
+        </Logger>
+
+        <Root level="info">
+            <!--<AppenderRef ref="Console"log4j2.xml/>-->
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="WarnRollingFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

@@ -1,0 +1,4 @@
+<Context>
+  <Parameter name="cdsCheckAcceptorKConfigName" value="/opt/apache-tomcat/conf/cds-check-acceptor-k.generic.properties"/>
+  <Parameter name="log4jConfiguration" value="/opt/apache-tomcat/conf/log4j2.generic.xml"/>
+</Context>
